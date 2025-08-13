@@ -21,7 +21,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: 'https://smartfinance-three.vercel.app',
+    origin: ['https://smartfinance-three.vercel.app', 'http://localhost:300'],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
