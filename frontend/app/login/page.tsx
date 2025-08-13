@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 
 export default function LoginPage() {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +19,7 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+      const res = await axios.post(`${backendUrl}/api/auth/login`, { email, password });
       const { token, user } = res.data;
 
       localStorage.setItem("token", token);

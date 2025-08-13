@@ -18,6 +18,8 @@ interface UserProfileProps {
 }
 
 export default function UserProfile({ user, onUserUpdate }: UserProfileProps) {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
   const [loading, setLoading] = useState(false);
 
   const copyToClipboard = (text: string) => {
@@ -31,7 +33,7 @@ export default function UserProfile({ user, onUserUpdate }: UserProfileProps) {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        "http://localhost:5000/api/auth/become-partner",
+        `${backendUrl}/api/auth/become-partner`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

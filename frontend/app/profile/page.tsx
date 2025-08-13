@@ -15,6 +15,8 @@ interface User {
 }
 
 export default function ProfilePage() {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -22,7 +24,7 @@ export default function ProfilePage() {
   const fetchUser = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/auth/me", {
+      const res = await axios.get(`${backendUrl}/api/auth/me`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUser(res.data.user);

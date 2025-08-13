@@ -5,6 +5,8 @@ import axios from "axios";
 import Navigation from "../components/NavBar";
 
 export default function WinningsPage() {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
   const [stockDecimal, setStockDecimal] = useState("");
   const [receiptNumber, setReceiptNumber] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,7 +20,7 @@ export default function WinningsPage() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        "http://localhost:5000/api/winnings",
+        `${backendUrl}/api/winnings`,
         { stockDecimal, receiptNumber },
         { headers: { Authorization: `Bearer ${token}` } }
       );

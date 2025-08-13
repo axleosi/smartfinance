@@ -12,6 +12,8 @@ interface Receipt {
 }
 
 export default function ConsultingPage() {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
   const [receipts, setReceipts] = useState<Receipt[]>([]);
   const [loading, setLoading] = useState(true);
   const [adviceMap, setAdviceMap] = useState<{ [key: string]: string }>({});
@@ -22,13 +24,13 @@ export default function ConsultingPage() {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get<{ receipts: Receipt[] }>(
-          "http://localhost:5000/api/receipts",
+          `${backendUrl}/api/receipts`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
         const receiptsWithUrl = res.data.receipts.map(r => ({
           ...r,
-          originalImageUrl: `http://localhost:5000${r.originalImageUrl}`,
+          originalImageUrl: `${backendUrl}${r.originalImageUrl.startsWith('/') ? '' : '/'}${r.originalImageUrl}`,
         }));
 
         setReceipts(receiptsWithUrl);
@@ -50,7 +52,7 @@ export default function ConsultingPage() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get<{ advice: string }>(
-        `http://localhost:5000/api/receipts/${receiptId}/advice`,
+        `${backendUrl}/api/receipts/${receiptId}/advice`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setAdviceMap(prev => ({ ...prev, [receiptId]: res.data.advice }));

@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
 export default function Signup() {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,7 +31,7 @@ export default function Signup() {
       Cookies.set("referralCode", promo, { expires: 7 });
 
       // ✅ Track visit immediately
-      axios.post(`http://localhost:5000/api/referrals/track/${promo}`, {}, { withCredentials: true })
+      axios.post(`${backendUrl}/api/referrals/track/${promo}`, {}, { withCredentials: true })
         .catch(err => console.error("Track visit error:", err));
     } else {
       // ✅ Load referral from cookie if exists
@@ -52,7 +54,7 @@ export default function Signup() {
     try {
       const referralToSend = referralCodeOrLink || Cookies.get("referralCode") || "";
 
-      const res = await axios.post("http://localhost:5000/api/auth/register", {
+      const res = await axios.post(`${backendUrl}/api/auth/register`, {
         name,
         email,
         password,

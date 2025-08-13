@@ -84,6 +84,8 @@ interface DashboardStats {
 }
 
 const AdminDashboard: React.FC = () => {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
   const [users, setUsers] = useState<User[]>([]);
   const [partners, setPartners] = useState<Partner[]>([]);
   const [payments, setPayments] = useState<Payment[]>([]);
@@ -122,14 +124,14 @@ const AdminDashboard: React.FC = () => {
         snsSharesRes,
         dashboardStatsRes,
       ] = await Promise.all([
-        axios.get<User[]>('http://localhost:5000/api/admin/users', config),
-        axios.get<Partner[]>('http://localhost:5000/api/admin/partners', config),
-        axios.get<Payment[]>('http://localhost:5000/api/admin/payments', config),
-        axios.get<Coupon[]>('http://localhost:5000/api/admin/coupons', config),
-        axios.get<WinningEntry[]>('http://localhost:5000/api/admin/winnings', config),
-        axios.get<VisitorSource[]>('http://localhost:5000/api/admin/visitor-sources', config),
-        axios.get<SNSShare[]>('http://localhost:5000/api/admin/sns-shares', config),
-        axios.get<DashboardStats>('http://localhost:5000/api/admin/dashboard-stats', config),
+        axios.get<User[]>(`${backendUrl}/api/admin/users`, config),
+        axios.get<Partner[]>(`${backendUrl}/api/admin/partners`, config),
+        axios.get<Payment[]>(`${backendUrl}/api/admin/payments`, config),
+        axios.get<Coupon[]>(`${backendUrl}/api/admin/coupons`, config),
+        axios.get<WinningEntry[]>(`${backendUrl}/api/admin/winnings`, config),
+        axios.get<VisitorSource[]>(`${backendUrl}/api/admin/visitor-sources`, config),
+        axios.get<SNSShare[]>(`${backendUrl}/api/admin/sns-shares`, config),
+        axios.get<DashboardStats>(`${backendUrl}/api/admin/dashboard-stats`, config),
       ]);
 
       setUsers(usersRes.data);

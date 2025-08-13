@@ -37,6 +37,8 @@ interface AccountSummary {
 }
 
 export default function AccountingPage() {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
   const [data, setData] = useState<AccountSummary | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -46,7 +48,7 @@ export default function AccountingPage() {
       try {
         const token = localStorage.getItem("token");
         const res = await axios.get<AccountSummary>(
-          "http://localhost:5000/api/accounts/summary",
+          `${backendUrl}/api/accounts/summary`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setData(res.data);

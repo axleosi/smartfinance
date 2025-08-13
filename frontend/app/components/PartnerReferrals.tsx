@@ -10,6 +10,8 @@ interface Referral {
 }
 
 export function PartnerReferrals() {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
   const [referrals, setReferrals] = useState<Referral[]>([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -19,7 +21,7 @@ export function PartnerReferrals() {
     async function fetchReferrals() {
       const token = localStorage.getItem("token");
       try {
-        const res = await axios.get("http://localhost:5000/api/auth/referrals", {
+        const res = await axios.get(`${backendUrl}/api/auth/referrals`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setReferrals(res.data.referrals);

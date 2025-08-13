@@ -13,6 +13,8 @@ interface Receipt {
 }
 
 export default function ReceiptsPage() {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
   const [file, setFile] = useState<File | null>(null);
   const [receipts, setReceipts] = useState<Receipt[]>([]);
   const [loading, setLoading] = useState(false);
@@ -22,7 +24,7 @@ export default function ReceiptsPage() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get<{ receipts: Receipt[] }>(
-        "http://localhost:5000/api/receipts",
+        `${backendUrl}/api/receipts`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setReceipts(res.data.receipts);
@@ -58,7 +60,7 @@ export default function ReceiptsPage() {
       const formData = new FormData();
       formData.append("receipt", file);
 
-      await axios.post("http://localhost:5000/api/receipts/upload", formData, {
+      await axios.post(`${backendUrl}/api/receipts/upload`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
