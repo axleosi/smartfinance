@@ -27,8 +27,14 @@ export default function LoginPage() {
       } else {
         router.push("/profile");
       }
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Login failed");
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.message || "Login failed");
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Login failed");
+      }
     } finally {
       setLoading(false);
     }
@@ -76,7 +82,7 @@ export default function LoginPage() {
         </button>
 
         <p className="mt-5 text-sm text-gray-600 text-center">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <span
             className="text-indigo-500 hover:underline cursor-pointer"
             onClick={() => router.push("/signup")}

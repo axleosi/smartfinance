@@ -32,8 +32,12 @@ export default function ConsultingPage() {
         }));
 
         setReceipts(receiptsWithUrl);
-      } catch (err: any) {
-        setError(err.message || "Failed to load receipts");
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("Failed to load receipts");
+        }
       } finally {
         setLoading(false);
       }
@@ -50,8 +54,11 @@ export default function ConsultingPage() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setAdviceMap(prev => ({ ...prev, [receiptId]: res.data.advice }));
-    } catch (err: any) {
-      setAdviceMap(prev => ({ ...prev, [receiptId]: "Failed to get advice" }));
+    } catch (err: unknown) {
+      setAdviceMap(prev => ({
+        ...prev,
+        [receiptId]: err instanceof Error ? err.message : "Failed to get advice",
+      }));
     }
   };
 
@@ -61,50 +68,50 @@ export default function ConsultingPage() {
 
   return (
     <>
-    <Navigation/>
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 py-10">
-      <div className="max-w-7xl mx-auto p-8">
-        <h1 className="text-4xl font-bold mb-10 text-center text-gray-900">
-          Your Receipts & Financial Advice
-        </h1>
+      <Navigation />
+      <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 py-10">
+        <div className="max-w-7xl mx-auto p-8">
+          <h1 className="text-4xl font-bold mb-10 text-center text-gray-900">
+            Your Receipts & Financial Advice
+          </h1>
 
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {receipts.map(r => (
-            <div
-              key={r._id}
-              className="relative bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-transform transform hover:-translate-y-1 flex flex-col"
-            >
-              <div className="relative h-64">
-                <img
-                  src={r.originalImageUrl}
-                  alt="Receipt"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <span className="absolute bottom-3 left-3 bg-green-700 text-white font-semibold px-3 py-1 rounded-lg shadow-lg">
-                  ${r.total.toFixed(2)}
-                </span>
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            {receipts.map(r => (
+              <div
+                key={r._id}
+                className="relative bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-transform transform hover:-translate-y-1 flex flex-col"
+              >
+                <div className="relative h-64">
+                  <img
+                    src={r.originalImageUrl}
+                    alt="Receipt"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <span className="absolute bottom-3 left-3 bg-green-700 text-white font-semibold px-3 py-1 rounded-lg shadow-lg">
+                    ${r.total.toFixed(2)}
+                  </span>
+                </div>
+
+                <div className="p-5 flex flex-col items-center">
+                  <button
+                    onClick={() => getAdvice(r._id)}
+                    className="py-2 px-6 bg-green-600 text-white font-semibold rounded-full shadow hover:bg-green-700 transition mb-3"
+                  >
+                    Get Advice
+                  </button>
+
+                  {adviceMap[r._id] && (
+                    <div className="w-full bg-green-50 text-gray-900 p-4 rounded-2xl shadow-inner text-sm text-center">
+                      {adviceMap[r._id]}
+                    </div>
+                  )}
+                </div>
               </div>
-
-              <div className="p-5 flex flex-col items-center">
-                <button
-                  onClick={() => getAdvice(r._id)}
-                  className="py-2 px-6 bg-green-600 text-white font-semibold rounded-full shadow hover:bg-green-700 transition mb-3"
-                >
-                  Get Advice
-                </button>
-
-                {adviceMap[r._id] && (
-                  <div className="w-full bg-green-50 text-gray-900 p-4 rounded-2xl shadow-inner text-sm text-center">
-                    {adviceMap[r._id]}
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 }

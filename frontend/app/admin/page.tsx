@@ -140,9 +140,13 @@ const AdminDashboard: React.FC = () => {
       setVisitorSources(visitorSourcesRes.data);
       setSnsShares(snsSharesRes.data);
       setDashboardStats(dashboardStatsRes.data);
-    } catch (err: any) {
-      setError(err?.message || 'Failed to fetch data');
-    }
+    } catch (err: unknown) {
+  if (err instanceof Error) {
+    setError(err.message);
+  } else {
+    setError('Failed to fetch data');
+  }
+}
     setLoading(false);
   };
 
