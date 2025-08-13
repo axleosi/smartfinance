@@ -48,17 +48,17 @@ export function PartnerReferrals() {
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="border-b border-indigo-300">
-            <th className="py-2 px-3">Name</th>
-            <th className="py-2 px-3">Email</th>
-            <th className="py-2 px-3">Joined Date</th>
+            <th className="py-2 px-3 text-gray-900">Name</th>
+            <th className="py-2 px-3 text-gray-900 ">Email</th>
+            <th className="py-2 px-3 text-gray-900">Joined Date</th>
           </tr>
         </thead>
         <tbody>
           {referrals.map((user) => (
-            <tr key={user._id} className="border-b border-indigo-200">
-              <td className="py-2 px-3">{user.name}</td>
-              <td className="py-2 px-3 break-all">{user.email}</td>
-              <td className="py-2 px-3">{new Date(user.createdAt).toLocaleDateString()}</td>
+            <tr key={user._id} className="border-b border-indigo-200  text-gray-900">
+              <td className="py-2 px-3  text-gray-900">{user.name}</td>
+              <td className="py-2 px-3 break-all text-gray-900">{user.email}</td>
+              <td className="py-2 px-3  text-gray-900">{new Date(user.createdAt).toLocaleDateString()}</td>
             </tr>
           ))}
         </tbody>

@@ -87,7 +87,7 @@ export default function Signup() {
         <input
           type="text"
           placeholder="Full Name"
-          className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition"
+          className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition text-gray-900 placeholder-gray-500"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -95,7 +95,7 @@ export default function Signup() {
         <input
           type="email"
           placeholder="Email Address"
-          className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition"
+          className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition  text-gray-900 placeholder-gray-500"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -104,7 +104,7 @@ export default function Signup() {
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Password"
-            className="w-full px-4 py-2 border rounded pr-10"
+            className="w-full px-4 py-2 border rounded pr-10 text-gray-900 placeholder-gray-500"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -120,7 +120,7 @@ export default function Signup() {
           <input
             type={showConfirmPassword ? "text" : "password"}
             placeholder="Confirm Password"
-            className="w-full px-4 py-2 border rounded pr-10"
+            className="w-full px-4 py-2 border rounded pr-10 text-gray-900 placeholder-gray-500"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
@@ -136,7 +136,7 @@ export default function Signup() {
           <input
             type="text"
             placeholder="Referral Code or Promo Link (optional)"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition disabled:bg-gray-100 disabled:cursor-not-allowed"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900 placeholder-gray-500"
             value={referralCodeOrLink}
             onChange={(e) => setReferralCodeOrLink(e.target.value)}
             disabled={isReferralLocked}

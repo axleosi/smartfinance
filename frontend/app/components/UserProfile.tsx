@@ -89,7 +89,7 @@ export default function UserProfile({ user, onUserUpdate }: UserProfileProps) {
               <div className="flex-1">
                 <p className="font-semibold text-indigo-800 mb-1">Promo Code</p>
                 <p
-                  className="text-xl font-mono bg-white p-2 rounded shadow cursor-pointer select-all"
+                  className="text-xl font-mono bg-white p-2 rounded shadow cursor-pointer select-all text-gray-900"
                   onClick={() => user.promoCode && copyToClipboard(user.promoCode)}
                 >
                   {user.promoCode}
